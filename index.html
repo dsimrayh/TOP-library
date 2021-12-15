@@ -8,6 +8,71 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <h1>Library</h1>
+    <button id="new-book-btn">ADD BOOK</button>
+
+    <div id="library">
+        <div class="card">
+            <p class="book-title">The Hobbit</p>
+            <p class="book-author">J. R. R. Tolkien</p>
+            <p class="book-pages">200 pages</p>
+            <div class="book-options">
+                <label for="read-1" class="book-read">Read</label>
+                <input id="read-1" class="book-read-checkbox" type="checkbox">
+                <button class="remove-book">Remove</button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="book-title">The Hobbit</p>
+            <p class="book-author">J. R. R. Tolkien</p>
+            <p class="book-pages">200 pages</p>
+            <div class="book-options">
+                <label for="read-1" class="book-read">Read</label>
+                <input id="read-1" class="book-read-checkbox" type="checkbox">
+                <button class="remove-book">Remove</button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="book-title">The Hobbit</p>
+            <p class="book-author">J. R. R. Tolkien</p>
+            <p class="book-pages">200 pages</p>
+            <div class="book-options">
+                <label for="read-1" class="book-read">Read</label>
+                <input id="read-1" class="book-read-checkbox" type="checkbox">
+                <button class="remove-book">Remove</button>
+            </div>
+        </div>
+        <div class="card">
+            <p class="book-title">The Hobbit</p>
+            <p class="book-author">J. R. R. Tolkien</p>
+            <p class="book-pages">200 pages</p>
+            <div class="book-options">
+                <label for="read-1" class="book-read">Read</label>
+                <input id="read-1" class="book-read-checkbox" type="checkbox">
+                <button class="remove-book">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mask" class="hidden">
+        <div id="new-book-form">
+            <button id="close-form">X</button>
+            <div id="form-title">New Book</div>
+            <form>
+                <label class="form-label" for="title">Title</label>
+                <input type="text" id="title" name="book-info">
+
+                <label class="form-label" for="author">Author</label>
+                <input type="text" id="author" name="book-info">
+
+                <label class="form-label" for="pages">Pages</label>
+                <input type="text" id="pages" name="book-info">
+
+                <input type="submit" id="submit" value="Add to library">
+            </form>
+        </div>
+    </div>
+
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
