@@ -7,21 +7,24 @@ function Book(title, author, pages) {
 	this.read = false;
 }
 
+Book.prototype.hasBeenRead = function() {
+	this.read = !this.read;
+	console.log(this.read);
+}
+
 // Return values are used to allow/prevent displayBooks function from being called
 function addBookToLibrary() {
 	const bookTitle = document.querySelector("#title").value;
 	const bookAuthor = document.querySelector("#author").value;
 	const bookPages = document.querySelector("#pages").value;
 
-	if(!bookTitle || !bookAuthor || !bookPages) return false;
+	if(!bookTitle || !bookAuthor || !bookPages) return;
 
 	const newBook = new Book(bookTitle, bookAuthor, bookPages)
 	myLibrary.push(newBook);
 	const formMask = document.querySelector("#mask");
 	formMask.classList.add('hidden');
 	resetForm();
-
-	return true;
 }
 
 function resetForm() {
@@ -45,7 +48,7 @@ function createBaseCard(book) {
 
 	const pages = document.createElement("p");
 	pages.classList.add("book-pages");
-	pages.innerText = book.pages
+	pages.innerText = `${book.pages} pages`;
 
 	card.appendChild(title);
 	card.appendChild(author);
@@ -54,8 +57,8 @@ function createBaseCard(book) {
 	return card;
 }
 
-// Creates "Read" and "Remove" for cards
-function createCardOptions() {
+// Creates "Read" and "Remove" buttons for cards
+function createCardButtons(indexCounter) {
 	const options = document.createElement("div");
 	options.classList.add("book-options");
 
@@ -66,10 +69,12 @@ function createCardOptions() {
 	const input = document.createElement("input");
 	input.setAttribute("type", "checkbox")
 	input.classList.add("book-read-checkbox");
+	input.setAttribute("data-index", indexCounter);
 
 	const button = document.createElement("button");
 	button.classList.add("remove-book");
 	button.innerText = "Remove";
+	button.setAttribute("data-index", indexCounter);
 
 	options.appendChild(label);
 	options.appendChild(input);
@@ -78,18 +83,49 @@ function createCardOptions() {
 	return options;
 }
 
-function displayBooks() {
+function clearDisplayedLibrary() {
 	const library = document.querySelector("#library");
-	myLibrary.forEach(book => {
-		const card = createBaseCard(book);
-		const options = createCardOptions()
-		card.appendChild(options);
-		library.appendChild(card);
-	});
+	while(library.firstChild) {
+		library.removeChild(library.lastChild);
+	}
 }
 
-function addAllButtonListeners () {
-	// Still needs to be added to
+// Main function -- clears displayed books and reassigns indexes, displays again
+function displayBooks() {
+	clearDisplayedLibrary();
+	const library = document.querySelector("#library");
+	let indexCounter = 0;
+	myLibrary.forEach(book => {
+		const card = createBaseCard(book);
+		const options = createCardButtons(indexCounter)
+		card.appendChild(options);
+		library.appendChild(card);
+		indexCounter++;
+	});
+	addCardButtonListeners();
+}
+
+// Add listeners only to card buttons
+function addCardButtonListeners() {
+	const removeButtons = document.querySelectorAll(".remove-book");
+	const readButtons = document.querySelectorAll(".book-read-checkbox");
+
+	removeButtons.forEach(remove => {
+		remove.addEventListener("click", (e) => {
+			myLibrary.splice(e.target.dataset.index, 1);
+			displayBooks();
+		});
+	});
+
+	readButtons.forEach(read => {
+		read.addEventListener("change", (e) => {
+			myLibrary[e.target.dataset.index].hasBeenRead();
+		})
+	})
+}
+
+// Add listeners for non-card buttons
+function addMainButtonListeners () {
 	const newBookButton = document.querySelector("#new-book-btn");
 	const submitNewBook = document.querySelector("#submit");
 	const closeNewBookForm = document.querySelector("#close-form");
@@ -105,10 +141,9 @@ function addAllButtonListeners () {
 
 	submitNewBook.addEventListener("click", (e) => {
 		e.preventDefault();
-		const bookAdded = addBookToLibrary();
-		if(bookAdded) displayBooks();
-		else return;
+		addBookToLibrary();
+		displayBooks();
 	})
 }
 
-addAllButtonListeners();
+addMainButtonListeners();
