@@ -64,6 +64,11 @@ h1 {
     font-size: 18px;
     font-weight: 900;
     font-style: italic;
+}
+
+.book-title,
+.book-author,
+.book-pages {
     text-align: center;
 }
 

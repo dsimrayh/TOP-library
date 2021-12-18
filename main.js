@@ -9,10 +9,8 @@ function Book(title, author, pages) {
 
 Book.prototype.hasBeenRead = function() {
 	this.read = !this.read;
-	console.log(this.read);
 }
 
-// Return values are used to allow/prevent displayBooks function from being called
 function addBookToLibrary() {
 	const bookTitle = document.querySelector("#title").value;
 	const bookAuthor = document.querySelector("#author").value;
@@ -97,8 +95,8 @@ function displayBooks() {
 	let indexCounter = 0;
 	myLibrary.forEach(book => {
 		const card = createBaseCard(book);
-		const options = createCardButtons(indexCounter)
-		card.appendChild(options);
+		const buttons = createCardButtons(indexCounter)
+		card.appendChild(buttons);
 		library.appendChild(card);
 		indexCounter++;
 	});
